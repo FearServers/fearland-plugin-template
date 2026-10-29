@@ -1,0 +1,25 @@
+# fl-ci sha256=c59ea98e333d6728c188db89c3659634cfa56652e375ec41576eb4fdb5db67ff
+# Managed by `fl ci sync` — edit tools/templates/github/plugin-caller.yml in the meta repo, not this file.
+name: fearland
+
+on:
+  push:
+  pull_request:
+
+concurrency:
+  group: fearland-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  pipeline:
+    uses: FearServers/fearland/.github/workflows/plugin-ci.yml@main
+    permissions:
+      contents: read
+    with:
+      meta_ref: main
+      artifacts: |
+        fearland-example=fearland-example
+      siblings: |
+
+    secrets:
+      FEARLAND_CHECKOUT_TOKEN: ${{ secrets.FEARLAND_CHECKOUT_TOKEN }}

@@ -1,0 +1,10 @@
+name: FearLandExample
+version: ${version}
+api-version: '26.2'
+main: br.fearland.example.ExamplePlugin
+description: Replace with the plugin description.
+authors:
+  - FearLand
+depend:
+  - FearLandAPI
+  - CommandAPI

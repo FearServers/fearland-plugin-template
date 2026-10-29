@@ -1,0 +1,11 @@
+{
+  "artifacts": [
+    {
+      "id": "fearland-example",
+      "platform": "paper",
+      "task": "jar",
+      "prefix": "fearland-example",
+      "destinations": ["lobby"]
+    }
+  ]
+}
