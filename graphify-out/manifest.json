@@ -1,0 +1,104 @@
+{
+  "build.gradle.kts": {
+    "mtime": 1793478961.358877,
+    "seen": 1793478970.3830163,
+    "ast_hash": "61e46e7e1589ee790556c06b1674eca1",
+    "semantic_hash": ""
+  },
+  "deploy-targets.json": {
+    "mtime": 1793478961.358877,
+    "seen": 1793478970.3830197,
+    "ast_hash": "eadff5ffa22c95cf712f04f0db2cf01b",
+    "semantic_hash": ""
+  },
+  "gradle/fearland-deploy.gradle.kts": {
+    "mtime": 1793478961.358877,
+    "seen": 1793478970.3830214,
+    "ast_hash": "a2e99380a55dde8e48ef2f57eed6a88c",
+    "semantic_hash": ""
+  },
+  "gradlew": {
+    "mtime": 1793478961.359496,
+    "seen": 1793478970.383022,
+    "ast_hash": "a43be8432bac3ffd05b3769aa42fe996",
+    "semantic_hash": ""
+  },
+  "settings.gradle.kts": {
+    "mtime": 1793478961.359496,
+    "seen": 1793478970.3830228,
+    "ast_hash": "8a1f0cbfdfaf26e4243f2c7af8653ecf",
+    "semantic_hash": ""
+  },
+  "src/main/java/br/fearland/example/ExamplePlugin.java": {
+    "mtime": 1793478961.359732,
+    "seen": 1793478970.3830233,
+    "ast_hash": "2d979a36646b4221dc29702a176c6d8c",
+    "semantic_hash": ""
+  },
+  ".claude/agents/fearland-explore.md": {
+    "mtime": 1793478961.3585467,
+    "seen": 1793478970.3830242,
+    "ast_hash": "a1ba942c59906e28bfd1217a33aad175",
+    "semantic_hash": ""
+  },
+  ".claude/agents/implementer.md": {
+    "mtime": 1793478961.3586664,
+    "seen": 1793478970.3830247,
+    "ast_hash": "ac197048c9cbd0bba01261e05c71f5b2",
+    "semantic_hash": ""
+  },
+  ".claude/agents/reviewer.md": {
+    "mtime": 1793478961.3586664,
+    "seen": 1793478970.3830252,
+    "ast_hash": "039827c507be31dcb996451a78b713e6",
+    "semantic_hash": ""
+  },
+  ".claude/rules/build-deploy.md": {
+    "mtime": 1793478961.3586664,
+    "seen": 1793478970.3830256,
+    "ast_hash": "70d4d45b3f5242eb69c7786951aaa520",
+    "semantic_hash": ""
+  },
+  ".claude/rules/paper.md": {
+    "mtime": 1793478961.3587973,
+    "seen": 1793478970.3830264,
+    "ast_hash": "dba4bde06af4d4d64154fb77f18051b1",
+    "semantic_hash": ""
+  },
+  ".claude/rules/persistence.md": {
+    "mtime": 1793478961.3587973,
+    "seen": 1793478970.3830268,
+    "ast_hash": "938b7dd0fe67921a0eca22acb7852a04",
+    "semantic_hash": ""
+  },
+  ".github/workflows/fearland.yml": {
+    "mtime": 1793478961.358877,
+    "seen": 1793478970.3830276,
+    "ast_hash": "4f4bac7cccfff6374643029c32b1edb2",
+    "semantic_hash": ""
+  },
+  "AGENTS.md": {
+    "mtime": 1793478961.358877,
+    "seen": 1793478970.383028,
+    "ast_hash": "7aeaf10adaa8e5e44539c634898ee4ef",
+    "semantic_hash": ""
+  },
+  "CLAUDE.md": {
+    "mtime": 1793478961.358877,
+    "seen": 1793478970.3830287,
+    "ast_hash": "ddb60971c0b6417a13e93937f4d1f6e8",
+    "semantic_hash": ""
+  },
+  "README.md": {
+    "mtime": 1793478961.358877,
+    "seen": 1793478970.3830292,
+    "ast_hash": "d94039ffa3f4088e962e838caa83ada3",
+    "semantic_hash": ""
+  },
+  "src/main/resources/plugin.yml": {
+    "mtime": 1793478961.359732,
+    "seen": 1793478970.3830297,
+    "ast_hash": "a34554878165bce74c006f9366effa25",
+    "semantic_hash": ""
+  }
+}

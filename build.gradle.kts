@@ -47,5 +47,3 @@ tasks.jar {
     from({ configurations.runtimeClasspath.get().map { if (it.isDirectory) it else zipTree(it) } })
     exclude("br/fearland/core/**", "br/fearland/runtime/**", "br/fearland/libs/**")
 }
-
-apply(from = file("gradle/fearland-deploy.gradle.kts"))
