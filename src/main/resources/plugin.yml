@@ -1,6 +1,6 @@
 name: FearLandExample
 version: ${version}
-api-version: '26.2'
+api-version: '26.3'
 main: br.fearland.example.ExamplePlugin
 description: Replace with the plugin description.
 authors:
