@@ -47,3 +47,13 @@ tasks.jar {
     from({ configurations.runtimeClasspath.get().map { if (it.isDirectory) it else zipTree(it) } })
     exclude("br/fearland/core/**", "br/fearland/runtime/**", "br/fearland/libs/**")
 }
+
+// Deploy button (IDE Gradle panel > deployment): the same `fl deploy` as the terminal, from this directory. It is not part of build/check.
+tasks.register<Exec>("deployStaging") {
+    group = "deployment"
+    description = "Builds this plugin and installs it on staging (runs `fl deploy`; prepare the tooling with `fl doctor`)"
+    workingDir = projectDir
+    val workspaceFl = file("../../tools/fl")
+    commandLine(if (workspaceFl.canExecute()) workspaceFl.path else "fl", "deploy")
+    isIgnoreExitValue = false
+}
