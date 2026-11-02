@@ -49,11 +49,20 @@ tasks.jar {
 }
 
 // Deploy button (IDE Gradle panel > deployment): the same `fl deploy` as the terminal, from this directory. It is not part of build/check.
+// `fl` is a Linux tool and a staging deploy needs the staging host's Panel key, so this runs where `fl` runs: the staging host
+// (an IDE connected to it over SSH, docs/current/onboarding.md). Anywhere else it stops with that instruction, not a launcher error.
 tasks.register<Exec>("deployStaging") {
     group = "deployment"
     description = "Builds this plugin and installs it on staging (runs `fl deploy`; prepare the tooling with `fl doctor`)"
     workingDir = projectDir
     val workspaceFl = file("../../tools/fl")
-    commandLine(if (workspaceFl.canExecute()) workspaceFl.path else "fl", "deploy")
+    val flCommand = if (workspaceFl.canExecute()) workspaceFl.path else "fl"
+    commandLine(flCommand, "deploy")
     isIgnoreExitValue = false
+    doFirst {
+        val onPath = System.getenv("PATH").orEmpty().split(File.pathSeparator).any { File(it, "fl").canExecute() }
+        if (System.getProperty("os.name").startsWith("Windows") || (flCommand == "fl" && !onPath)) {
+            throw GradleException("deployStaging runs `fl deploy`, which needs Linux and the staging host's Panel key: run it on the staging host (IDE over SSH, docs/current/onboarding.md)")
+        }
+    }
 }

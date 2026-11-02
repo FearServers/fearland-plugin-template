@@ -1,0 +1,4 @@
+# Linux start script must stay LF (a CRLF checkout breaks it under WSL/Linux)
+/gradlew text eol=lf
+# Windows script keeps CRLF
+*.bat text eol=crlf

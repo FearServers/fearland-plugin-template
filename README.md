@@ -23,25 +23,28 @@ documented once, in the workspace: `docs/current/deployment.md`.
 
 ## Build and check
 
+Platform line: Paper 26.3 (`paper-api 26.3.build.237-stable`), Java 25, `fearland-api` 1.2.0, CommandAPI 12.1.0. `JAVA_HOME` must be JDK 25.
+
 ```bash
-./gradlew build          # compile, jar; never deploys
-fl doctor                # is this machine ready for the plugin you are in
+(cd ../fearland-api && ./gradlew publishToMavenLocal)   # once, and after the API changes (Windows: gradlew.bat)
+./gradlew build          # compile, jar; never deploys (Windows: gradlew.bat build)
+fl doctor                # Linux/WSL2 workspace: is this machine ready for the plugin you are in
 ```
 
-A build needs `br.fearland:core` and `br.fearland:paper` in the local Maven repository; `fl deploy` publishes
-`fearland-api` there when it is missing.
+A build needs `br.fearland:core` and `br.fearland:paper` (`fearland.version`) in the local Maven repository; the `fearland-api` checkout next to this repository decides which API you build against. The walkthrough for a clean machine, Windows included, is `docs/current/onboarding.md` in the workspace.
 
 ## Test on staging
 
+A deploy runs on the staging host (`fl` is Linux-only and the Panel key lives there), so from a workstation it is workstation -> SSH -> staging:
+
 ```bash
-fl deploy --dry-run      # the plan only
-fl deploy                # build, install on staging, restart, prove the plugin loaded
-fl deploy --status       # what is installed
-./gradlew deployStaging  # the same `fl deploy`, for the IDE Gradle panel (group: deployment)
+ssh fearland-staging "cd FearLand/plugins/fearland-<name> && fl deploy --dry-run"   # the plan only
+ssh fearland-staging "cd FearLand/plugins/fearland-<name> && fl deploy"             # build, install, restart, prove the plugin loaded
+ssh fearland-staging "cd FearLand/plugins/fearland-<name> && fl deploy --status"    # what is installed
+./gradlew deployStaging  # the same `fl deploy`, for an IDE connected to the staging host (group: deployment)
 ```
 
-`deployStaging` is a thin wrapper: it runs `fl deploy` in this directory (`../../tools/fl` of the workspace, else `fl` from
-`PATH`) and is not part of `build`. Staging is the only target; production is released from `fearland-server`.
+`deployStaging` is a thin wrapper: it runs `fl deploy` in this directory (`../../tools/fl` of the workspace, else `fl` from `PATH`), holds no credential and is not part of `build`. Where `fl` cannot run (Windows, a machine without it) it fails at once with that instruction. Staging is the only target; production is released from `fearland-server`.
 
 ## What exists only after onboarding
 
