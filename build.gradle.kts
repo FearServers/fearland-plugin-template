@@ -48,21 +48,15 @@ tasks.jar {
     exclude("br/fearland/core/**", "br/fearland/runtime/**", "br/fearland/libs/**")
 }
 
-// Deploy button (IDE Gradle panel > deployment): the same `fl deploy` as the terminal, from this directory. It is not part of build/check.
-// `fl` is a Linux tool and a staging deploy needs the staging host's Panel key, so this runs where `fl` runs: the staging host
-// (an IDE connected to it over SSH, docs/current/onboarding.md). Anywhere else it stops with that instruction, not a launcher error.
+// Deploy button (IDE Gradle panel > deployment): runs `fl deploy` from this directory. It pushes this branch and the deploy workflow builds
+// and installs it on staging. Not part of build/check. `-PnoRestart` installs without restarting the servers.
 tasks.register<Exec>("deployStaging") {
     group = "deployment"
-    description = "Builds this plugin and installs it on staging (runs `fl deploy`; prepare the tooling with `fl doctor`)"
+    description = "Pushes this branch and installs it on staging through the deploy workflow (runs `fl deploy`)"
     workingDir = projectDir
-    val workspaceFl = file("../../tools/fl")
-    val flCommand = if (workspaceFl.canExecute()) workspaceFl.path else "fl"
-    commandLine(flCommand, "deploy")
-    isIgnoreExitValue = false
-    doFirst {
-        val onPath = System.getenv("PATH").orEmpty().split(File.pathSeparator).any { File(it, "fl").canExecute() }
-        if (System.getProperty("os.name").startsWith("Windows") || (flCommand == "fl" && !onPath)) {
-            throw GradleException("deployStaging runs `fl deploy`, which needs Linux and the staging host's Panel key: run it on the staging host (IDE over SSH, docs/current/onboarding.md)")
-        }
-    }
+    val noRestart = if (project.hasProperty("noRestart")) listOf("--no-restart") else listOf()
+    commandLine(
+        if (System.getProperty("os.name").startsWith("Windows")) listOf("cmd", "/C", "..\\..\\tools\\fl.cmd", "deploy") + noRestart
+        else listOf("../../tools/fl", "deploy") + noRestart
+    )
 }

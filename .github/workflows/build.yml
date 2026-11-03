@@ -1,0 +1,26 @@
+# Pull-request build on GitHub-hosted runners (./gradlew build, Java 25, fearland-api from dev in Maven local): the shared plugin-ci.yml of
+# the meta repository. Only for a PR to main that is ready for review (never a draft, never docs only); `dev` is validated locally and
+# the merge is not built again. Nothing here deploys; deploying is `fl deploy` -> deploy.yml.
+# Needs the Actions secret FEARLAND_CHECKOUT_TOKEN (`fl ci sync`). List sibling plugins compiled from source under `siblings`.
+name: build
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened, ready_for_review]
+    paths-ignore: ["**/*.md", "docs/**", ".claude/**", "graphify-out/**"]
+
+concurrency:
+  group: build-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    if: ${{ !github.event.pull_request.draft }}
+    uses: FearServers/fearland/.github/workflows/plugin-ci.yml@dev
+    permissions:
+      contents: read
+    with:
+      meta_ref: dev
+    secrets:
+      FEARLAND_CHECKOUT_TOKEN: ${{ secrets.FEARLAND_CHECKOUT_TOKEN }}
