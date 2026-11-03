@@ -48,12 +48,15 @@ tasks.jar {
     exclude("br/fearland/core/**", "br/fearland/runtime/**", "br/fearland/libs/**")
 }
 
-// Deploy button (IDE Gradle panel > deployment): the same `fl deploy` as the terminal, from this directory. It is not part of build/check.
+// Deploy button (IDE Gradle panel > deployment): runs `fl deploy` from this directory. It pushes this branch and the deploy workflow builds
+// and installs it on staging. Not part of build/check. `-PnoRestart` installs without restarting the servers.
 tasks.register<Exec>("deployStaging") {
     group = "deployment"
-    description = "Builds this plugin and installs it on staging (runs `fl deploy`; prepare the tooling with `fl doctor`)"
+    description = "Pushes this branch and installs it on staging through the deploy workflow (runs `fl deploy`)"
     workingDir = projectDir
-    val workspaceFl = file("../../tools/fl")
-    commandLine(if (workspaceFl.canExecute()) workspaceFl.path else "fl", "deploy")
-    isIgnoreExitValue = false
+    val noRestart = if (project.hasProperty("noRestart")) listOf("--no-restart") else listOf()
+    commandLine(
+        if (System.getProperty("os.name").startsWith("Windows")) listOf("cmd", "/C", "..\\..\\tools\\fl.cmd", "deploy") + noRestart
+        else listOf("../../tools/fl", "deploy") + noRestart
+    )
 }
