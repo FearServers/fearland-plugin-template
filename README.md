@@ -35,10 +35,10 @@ confirm in the log that the plugin is enabled.
 
 ```bash
 tools/fl deploy          # from this directory: pushes the branch, builds once on GitHub, installs on staging, restarts
-./gradlew deployStaging  # the same `fl deploy`, for the IDE Gradle panel (group: deployment); -PnoRestart installs without restarting
+./gradlew deployStaging  # `fl deploy --force-send` (ssh, no GitHub) for the IDE Gradle panel (group: deployment); -PnoRestart installs without restarting
 ```
 
-`deployStaging` only runs `fl deploy` (`..\..\tools\fl.cmd` on Windows): it holds no credential and is not part of `build`.
+`deployStaging` only runs `fl deploy --force-send` (`..\..\tools\fl.cmd` on Windows): it holds no credential and is not part of `build`.
 Production is released by `fl promote`, which copies what is on staging.
 
 ## CI

@@ -48,15 +48,16 @@ tasks.jar {
     exclude("br/fearland/core/**", "br/fearland/runtime/**", "br/fearland/libs/**")
 }
 
-// Deploy button (IDE Gradle panel > deployment): runs `fl deploy` from this directory. It pushes this branch and the deploy workflow builds
-// and installs it on staging. Not part of build/check. `-PnoRestart` installs without restarting the servers.
+// Deploy button (IDE Gradle panel > deployment): runs `fl deploy --force-send` from this directory. It builds the working tree here (fl runs
+// the Gradle build itself, so this task has no build dependency), sends it over ssh and installs it on staging: no commit, push or GitHub
+// Actions. Not part of build/check. `-PnoRestart` installs without restarting the servers.
 tasks.register<Exec>("deployStaging") {
     group = "deployment"
-    description = "Pushes this branch and installs it on staging through the deploy workflow (runs `fl deploy`)"
+    description = "Builds the working tree and installs it on staging over ssh (runs `fl deploy --force-send`)"
     workingDir = projectDir
-    val noRestart = if (project.hasProperty("noRestart")) listOf("--no-restart") else listOf()
+    val flArgs = listOf("deploy", "--force-send") + if (project.hasProperty("noRestart")) listOf("--no-restart") else listOf()
     commandLine(
-        if (System.getProperty("os.name").startsWith("Windows")) listOf("cmd", "/C", "..\\..\\tools\\fl.cmd", "deploy") + noRestart
-        else listOf("../../tools/fl", "deploy") + noRestart
+        if (System.getProperty("os.name").startsWith("Windows")) listOf("cmd", "/C", "..\\..\\tools\\fl.cmd") + flArgs
+        else listOf(file("../../tools/fl").path) + flArgs
     )
 }
